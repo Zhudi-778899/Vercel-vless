@@ -99,3 +99,63 @@ async function 生成配置信息(userID, hostName, sub, UA, RproxyIP, _url, env
 }
 
 // 其他辅助函数...
+
+
+export default async function handler(req, res) {
+    try {
+        const { method } = req;
+
+        if (method !== 'GET') {
+            return res.status(405).send('Method Not Allowed');
+        }
+
+        const url = new URL(req.url, `http://${req.headers.host}`);
+        const path = url.pathname.toLowerCase();
+
+        if (path === '/api/proxy') {
+            // 生成 V2RayN 订阅节点
+            const nodes = generateNodes();
+            return res.status(200).send(nodes);
+        } else if (path === '/') {
+            return res.status(200).sendFile('public/index.html');
+        } else {
+            return res.status(404).send('未找到该路径！');
+        }
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send(err.toString());
+    }
+}
+
+function generateNodes() {
+    // 这里生成 V2RayN 节点的示例
+    const nodes = [
+        {
+            name: "节点1",
+            server: "example1.com",
+            port: 443,
+            uuid: "your-uuid-1",
+            alterId: 64,
+            cipher: "aes-128-gcm",
+            network: "ws",
+            path: "/path1",
+            tls: true,
+        },
+        {
+            name: "节点2",
+            server: "example2.com",
+            port: 443,
+            uuid: "your-uuid-2",
+            alterId: 64,
+            cipher: "aes-128-gcm",
+            network: "ws",
+            path: "/path2",
+            tls: true,
+        },
+    ];
+
+    // 生成 V2RayN 配置文本
+    return nodes.map(node => {
+        return `vmess://${btoa(JSON.stringify(node))}`;
+    }).join('\n');
+}
