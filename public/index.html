@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V2Ray 订阅服务</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        #nodes {
+            margin-top: 20px;
+        }
+        。node {
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>V2Ray 订阅服务</h1>
+    <button id="fetchNodes">获取节点</button>
+    <div id="nodes"></div>
+
+    <script>
+        document.getElementById('fetchNodes').addEventListener('click', async () => {
+            const response = await fetch('/api/proxy');
+            const nodes = await response.text();
+            document.getElementById('nodes').innerText = nodes;
+        });
+    </script>
+</body>
+</html>
