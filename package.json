@@ -1,5 +1,5 @@
 {
-    "name": "vercel-proxy-server",
+    "name": "vercel-v2ray",
     "version": "1.0.0",
     "main": "api/proxy.js",
     "scripts": {
