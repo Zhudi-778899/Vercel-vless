@@ -21,7 +21,7 @@ function generateNodes() {
             id: uuid1,
             aid: "64",
             net: "ws",
-            type: "vless",
+            type: "vmess",
             host: "proxy.zhu-di.us.kg",
             path: "/api/proxy", // API 路径
             tls: "tls", // 启用 TLS
